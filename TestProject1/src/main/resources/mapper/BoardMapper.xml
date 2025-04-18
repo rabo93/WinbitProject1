@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winbit.project1.mapper.BoardMapper">
+
+    <!-- 게시글 전체 목록 조회 -->
+    <select id="getBoardList" resultType="BoardDTO">
+        SELECT * 
+        FROM board
+    </select>
+
+    <!-- 조회수 증가 처리 -->
+	<update id="updateHit">
+		UPDATE board
+		SET hit = hit + 1
+		WHERE idx = #{idx}
+	</update>    
+    
+    <!-- idx에 해당하는 게시글 상세 조회 -->
+    <select id="getBoardById" resultType="BoardDTO">
+    	SELECT *
+    	FROM board
+    	WHERE idx = #{idx}
+    </select>
+    
+    
+</mapper>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+		layout:decorate="~{layouts/layout}">
+<!-- 이 페이지는 layout 을 기본으로 하는 것을 명시 (layout 상속받음) -->
+
+<!-- 각 페이지마다 다르게 하고 싶을 경우 명시 -->
+<head>
+	<title layout:fragment="title">home.html</title>
+	<!-- Custom styles for this template -->
+	<!--	<link href="/css/main.css" rel="stylesheet">-->
+</head>		
+		
+<body>
+	<div layout:fragment="content">
+		<!-- 제목 -->
+		<header class="mb-4">
+			<h1 class="fw-bolder mb-1">Project1</h1>
+			<div class="text-muted fst-italic mb-2">Posted on April 15, 2025 by Bora</div>
+	        <!-- Post categories-->
+<!--	        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>-->
+<!--	        <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>-->
+	    </header>
+
+		
+		
+<!--	</div>-->
+<!--	<div>-->
+		<table id="table" class="table">
+<!--		<tabl id="board_table" class="board-table">-->
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일자</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>	
+<!--	</div>-->
+<!--	<div>-->
+		<button onclick="getBoardList()" class="btn btn-primary">목록 불러오기</button>
+		<button onclick="writeBoard()" class="btn btn-secondary">글쓰기</button>
+	</div>
+	
+	
+	<!-- Core theme JS-->
+	<script src="js/jquery-3.7.1.js"></script>
+	<th:block layout:fragment="script">
+		<script>
+			// 버튼 클릭 이벤트(게시글 목록 불러오기) => Ajax로 DB 데이터 불러오기
+			function getBoardList() {
+				$.ajax({
+					type: 'GET',
+					url: '/getBoardList',
+					success: function(result) {
+						// console.log(result);
+						// 기존 목록 지우기
+						$('#table tbody').empty(); // tbody만 비운다
+						
+						// DB에서 가져온 데이터가 있을 경우 목록 추가
+						if(result.length > 0) {
+							for(var i=0; i < result.length; i++) {
+								// console.log(result[i]);
+								// console.log(result[i].idx);
+								str='<tr>'
+								str += '<td>'+ result[i].idx + '</td>';
+								str += '<td><a href = "view?idx=' + result[i].idx + '">' + result[i].title + '</a></td>';
+								str += '<td>'+ result[i].writer + '</td>';
+								str += '<td>'+ result[i].regDate + '</td>';
+								
+								
+								
+								str += '<td>'+ result[i].hit + '</td>';
+								str += '</tr>'
+								
+								// console.log(str);
+								$('#table').append(str);
+							}
+						} else {
+							console.log("서버 응답 데이터:", result);
+							alert("데이터가 없거나 형식 오류 입니다.");
+						}
+					}
+				});
+			}
+		</script>
+	</th:block>
+</body>
+</html>

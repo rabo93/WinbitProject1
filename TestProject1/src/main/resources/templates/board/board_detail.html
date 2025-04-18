@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+		layout:decorate="~{layouts/layout}">
+<!-- 이 페이지는 layout 을 기본으로 하는 것을 명시 (layout 상속받음) -->
+
+<head>
+	<title layout:fragment="title">게시글 상세 페이지</title>
+	<!-- Custom styles for this template -->
+	<!--	<link href="/css/main.css" rel="stylesheet">-->
+</head>		
+		
+<body>
+	<div layout:fragment="content">
+		<table id="table" class="table">
+			<tr>
+				<th>번호</th>
+				<td th:text="${board.idx}"></td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td th:text="${board.writer}"></td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td th:text="${board.title}"></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td th:text="${board.content}"></td>
+			</tr>
+			<tr>
+				<th>작성일자</th>
+<!--				<td th:text="${board.regDate}">2025-04-16 05:00:00</td>-->
+					<!-- model에 넣고 타임리프 템플릿 렌더링 => LocalDateTime.toString() => 2025-04-15T16:35:01 형식--> 
+					<!-- => 타임리프에서 날짜 포맷 지정해서 출력 -->
+				<td th:text="${#temporals.format(board.regDate, 'yyyy년 MM월 dd일  a hh시 mm분 ss초')}"></td>
+			</tr>
+			<tr>
+				<th>조회수</th>
+				<td th:text="${board.hit}"></td>
+			</tr>
+		</table>	
+		
+<!--		<button class="btn btn-primary" onclick="history.back()">돌아가기</button>-->
+		<button class="btn btn-primary" th:onclick="|location.href='@{/}'|">돌아가기</button>
+		
+	</div>
+	
+	
+	
+	
+	<!-- Core theme JS-->
+	<script src="js/jquery-3.7.1.js"></script>
+	<th:block layout:fragment="script">
+		<script>
+		</script>
+	</th:block>
+</body>
+</html>

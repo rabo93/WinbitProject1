@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+		layout:decorate="~{layouts/layout}">
+<!-- 이 페이지는 layout 을 기본으로 하는 것을 명시 (layout 상속받음) -->
+
+<head>
+	<title layout:fragment="title">게시글 작성</title>
+	<!-- Custom styles for this template -->
+	<!--	<link href="/css/main.css" rel="stylesheet">-->
+</head>		
+		
+<body>
+	<div layout:fragment="content">
+		<form action="/board" method="post" th:object="${boardDTO}"> 
+			<table id="table" class="table">
+				<tr>
+					<th>작성자</th>
+					<td><input type="text" th:field="*{writer}" readonly></td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td><input type="text" th:field="*{title}"></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<textarea rows="10" cols="10" th:field="*{content}"></textarea>
+				</tr>
+			</table>	
+			
+			
+			<button type="submit" class="btn btn-primary" th:onclick="|location.href='@{/regBoard}'|">등록하기</button>
+		</form>
+	</div>
+	
+	
+	
+	
+	<!-- Core theme JS-->
+	<script src="js/jquery-3.7.1.js"></script>
+	<th:block layout:fragment="script">
+		<script>
+		</script>
+	</th:block>
+</body>
+</html>
